@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AkkaMVVM.Properties
+namespace AkkaMvvm.Properties
 {
 
 
