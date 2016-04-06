@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.Composition;
-
-namespace AkkaMvvm.Interfaces
+﻿namespace AkkaMvvm.Interfaces
 {
-    [InheritedExport]
     public interface ILogViewModel
     {
-        string Text { get; }
+        string Text { get; set; }
     }
 }

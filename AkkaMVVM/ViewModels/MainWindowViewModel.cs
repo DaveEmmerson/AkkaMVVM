@@ -1,5 +1,4 @@
 ﻿using AkkaMvvm.Interfaces;
-using System.ComponentModel.Composition;
 
 namespace AkkaMvvm.ViewModels
 {
@@ -8,7 +7,6 @@ namespace AkkaMvvm.ViewModels
         public ITickerViewModel TickerViewModel { get; }
         public ILogViewModel LogViewModel { get; }
 
-        [ImportingConstructor]
         public MainWindowViewModel(ITickerViewModel tickerViewModel, ILogViewModel logViewModel)
         {
             TickerViewModel = tickerViewModel;

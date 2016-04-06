@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace AkkaMvvm.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
-        protected ViewModelBase() { }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void Set<T>(ref T oldValue, T newValue, [CallerMemberName] string propertyName = null)
+        public void Set<T>(ref T oldValue, T newValue, [Optional] Action ifChangedAction, [CallerMemberName] string propertyName = null)
         {
             if (!EqualityComparer<T>.Default.Equals(oldValue, newValue))
             {

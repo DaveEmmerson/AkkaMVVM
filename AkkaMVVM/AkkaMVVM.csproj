@@ -61,17 +61,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="App\MEF.cs" />
+    <Compile Include="Actors\TickerActor.cs" />
+    <Compile Include="App\LogActor.cs" />
     <Compile Include="Interfaces\ILogger.cs" />
     <Compile Include="Interfaces\ILogViewModel.cs" />
     <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="Interfaces\ITickerViewModel.cs" />
-    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Utilities\Guard.cs" />
+    <Compile Include="ViewModels\ChangeSpeedMessage.cs" />
     <Compile Include="ViewModels\Command.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\StartMessage.cs" />
+    <Compile Include="ViewModels\StopMessage.cs" />
     <Compile Include="ViewModels\TickerViewModel.cs" />
+    <Compile Include="ViewModels\TickMessage.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="App\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

@@ -1,6 +1,11 @@
-﻿using AkkaMvvm.Interfaces;
+﻿using Akka.Actor;
+using Akka.Event;
+using AkkaMvvm.Actors;
+using AkkaMvvm.Interfaces;
+using AkkaMvvm.ViewModels;
 using AkkaMvvm.Views;
 using System;
+using System.Timers;
 using System.Windows;
 
 namespace AkkaMvvm.App
@@ -48,8 +53,19 @@ namespace AkkaMvvm.App
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            var mainWindowViewModel = MEF.GetInstance<IMainWindowViewModel>();
+            var system = ActorSystem.Create("Ticker");
 
+            var logViewModel = new LogViewModel();
+            var logActor = system.ActorOf(Props.Create(() => new LogActor(logViewModel)));
+
+            var tickerViewModel = new TickerViewModel();
+            ElapsedEventHandler handler = (source, eventArgs) => {
+                logActor.Tell(new Info("Ticker", typeof(Info), "Tick"));
+
+            };
+            var tickerActor = system.ActorOf(Props.Create(() => new TickerActor(tickerViewModel, handler)));
+            
+            var mainWindowViewModel = new MainWindowViewModel(tickerViewModel, logViewModel);
             _mainWindow = new MainWindow();
             _mainWindow.DataContext = mainWindowViewModel;
             _mainWindow.Show();
