@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Event;
+using Akka.Pattern;
 using AkkaMvvm.Actors;
 using AkkaMvvm.Interfaces;
 using AkkaMvvm.ViewModels;
@@ -58,13 +59,16 @@ namespace AkkaMvvm.App
             var logViewModel = new LogViewModel();
             var logActor = system.ActorOf(Props.Create(() => new LogActor(logViewModel)));
 
-            var tickerViewModel = new TickerViewModel();
-            ElapsedEventHandler handler = (source, eventArgs) => {
-                logActor.Tell(new Info("Ticker", typeof(Info), "Tick"));
+            var childProps = Props.Create(factory: () => new TickerActor(logActor));
 
-            };
-            var tickerActor = system.ActorOf(Props.Create(() => new TickerActor(tickerViewModel, handler)));
-            
+            var tickerActor = system.ActorOf(
+                Props.Create(() =>
+                    new BackoffSupervisor(childProps, "Ticker", TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5), 0.1)
+                )
+            );
+
+            var tickerViewModel = new TickerViewModel(tickerActor);
+
             var mainWindowViewModel = new MainWindowViewModel(tickerViewModel, logViewModel);
             _mainWindow = new MainWindow();
             _mainWindow.DataContext = mainWindowViewModel;

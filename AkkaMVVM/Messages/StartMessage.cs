@@ -1,4 +1,4 @@
-﻿namespace AkkaMvvm.ViewModels
+﻿namespace AkkaMvvm.Messages
 {
     public class StartMessage
     {

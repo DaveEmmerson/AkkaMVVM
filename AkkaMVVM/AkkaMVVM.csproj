@@ -61,21 +61,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\IsStoppedMessage.cs" />
     <Compile Include="Actors\TickerActor.cs" />
-    <Compile Include="App\LogActor.cs" />
-    <Compile Include="Interfaces\ILogger.cs" />
+    <Compile Include="Actors\LogActor.cs" />
+    <Compile Include="Actors\TickLoggerActor.cs" />
     <Compile Include="Interfaces\ILogViewModel.cs" />
     <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="Interfaces\ITickerViewModel.cs" />
     <Compile Include="Utilities\Guard.cs" />
-    <Compile Include="ViewModels\ChangeSpeedMessage.cs" />
+    <Compile Include="Messages\ChangeSpeedMessage.cs" />
     <Compile Include="ViewModels\Command.cs" />
+    <Compile Include="Messages\IsRunningMessage.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\StartMessage.cs" />
-    <Compile Include="ViewModels\StopMessage.cs" />
+    <Compile Include="Messages\StartMessage.cs" />
+    <Compile Include="Messages\StopMessage.cs" />
     <Compile Include="ViewModels\TickerViewModel.cs" />
-    <Compile Include="ViewModels\TickMessage.cs" />
+    <Compile Include="Messages\TickMessage.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="App\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

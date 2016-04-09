@@ -3,6 +3,8 @@ using System.Windows.Input;
 using System.Timers;
 using Akka.Actor;
 using System;
+using AkkaMvvm.Actors;
+using AkkaMvvm.Messages;
 
 namespace AkkaMvvm.ViewModels
 {
@@ -18,19 +20,25 @@ namespace AkkaMvvm.ViewModels
         public int Speed
         {
             get { return _speed; }
-            set { Set(ref _speed, value); }
+            set {
+                Set(ref _speed, value, () => _tickerActor.Tell(new ChangeSpeedMessage(value)));
+            }
         }
 
-        public TickerViewModel()
+        private IActorRef _tickerActor;
+
+        public TickerViewModel(IActorRef tickerActor)
         {
+            _tickerActor = tickerActor;
+
             StartCommand = new Command(
-                canExecute: _ => true, //!actor.IsRunning,
-                execute: _ => { }// actorRef.Tell(new StartMessage())
+                canExecute: _ => true, // TODO: !actor.IsRunning
+                execute: _ => tickerActor.Tell(new StartMessage())
             );
 
             StopCommand = new Command(
-                canExecute: _ => true, //actor.IsRunning,
-                execute: _ => { }// actorRef.Tell(new StopMessage())
+                canExecute: _ => true, // TODO: actor.IsRunning,
+                execute: _ =>  tickerActor.Tell(new StopMessage())
             );
         }
     }

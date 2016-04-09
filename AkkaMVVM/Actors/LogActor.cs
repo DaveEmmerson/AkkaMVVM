@@ -3,7 +3,7 @@ using Akka.Event;
 using AkkaMvvm.Interfaces;
 using System;
 
-namespace AkkaMvvm.App
+namespace AkkaMvvm.Actors
 {
     public class LogActor : ReceiveActor
     {
@@ -17,8 +17,8 @@ namespace AkkaMvvm.App
 
                 var threadType = thread.IsThreadPoolThread ? "pool" : "UI  ";
 
-                viewModel.Text +=
-                    $"{e.Timestamp}: {_logCount++:0000} {e.LogClass.Name}: " +
+                viewModel.Text =
+                    $"{e.Timestamp}: {_logCount++:0000} {e.LogClass?.Name}: " +
                     $"{threadType} ({thread.ManagedThreadId:000}): {e.LogSource}: {e.Message}" +
                     Environment.NewLine + viewModel.Text;
             });
