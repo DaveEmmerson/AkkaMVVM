@@ -1,4 +1,5 @@
 ﻿using Akka.Actor;
+using Akka.Event;
 using Akka.Pattern;
 using AkkaMvvm.ViewModels;
 using AkkaMvvm.Views;
@@ -13,6 +14,7 @@ namespace AkkaMvvm.Actors
         {
             var logViewModel = new LogViewModel();
             var logActor = Context.ActorOf(Props.Create(() => new LogActor(logViewModel)));
+            logActor.Tell(new Debug(nameof(MainWindowActor), typeof(MainWindowActor), "Logger started"));
 
             var childProps = Props.Create(factory: () => new TickerActor(logActor));
 
@@ -24,7 +26,7 @@ namespace AkkaMvvm.Actors
 
             var tickerViewModelActor = Context.ActorOf(
                 Props.Create(
-                    () => new TickerViewModelActor(tickerActor, Self)
+                    () => new TickerViewModelActor(tickerActor, Self, logActor)
                 )
             );
 
@@ -32,9 +34,12 @@ namespace AkkaMvvm.Actors
             {
                 var mainWindowViewModel = new MainWindowViewModel(message.TickerViewModel, logViewModel);
                 var mainWindow = new MainWindow();
+
+                logActor.Tell(new Debug(nameof(Receive), typeof(MainWindowActor), "Main window created"));
                 mainWindow.DataContext = mainWindowViewModel;
 
                 mainWindow.Show();
+                logActor.Tell(new Debug(nameof(Receive), typeof(MainWindowActor), "Main window shown"));
             });
         }
     }

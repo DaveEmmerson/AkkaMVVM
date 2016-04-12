@@ -10,7 +10,7 @@ namespace AkkaMvvm.Actors
         {
             Receive<TickMessage>(_ =>
             {
-                _log.Tell(new Info("TickLoggerActor", null, "Tick"));
+                _log.Tell(new Info(nameof(TickLoggerActor), typeof(TickLoggerActor), "Tick"));
             });
         }
     }

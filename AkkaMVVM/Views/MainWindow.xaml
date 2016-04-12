@@ -15,7 +15,17 @@
             </ScrollViewer>
         </DataTemplate>
         <DataTemplate DataType="{x:Type actors:TickerViewModelActor}">
-            <StackPanel Background="YellowGreen" Grid.Row="1" Margin="5">
+            <StackPanel Grid.Row="1" Margin="5">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Background" Value="LightGoldenrodYellow" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Running}" Value="True">
+                                <Setter Property="Background" Value="YellowGreen" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
                 <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
                     <Button Content="Start" Command="{Binding StartCommand}" MinWidth="50"/>
                     <Button Content="Stop" Command="{Binding StopCommand}" Margin="10 0 15 0" MinWidth="50" />

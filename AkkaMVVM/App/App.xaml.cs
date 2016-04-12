@@ -13,18 +13,8 @@ namespace AkkaMvvm.App
 {
     public partial class App : Application
     {
-        #region Constants
-
         private const int retryCount = 1;
         private const int retryInterval = 2;
-
-        #endregion Constants
-
-        #region Fields
-
-        private MainWindow _mainWindow;
-
-        #endregion Fields
 
         public App()
         {
@@ -34,22 +24,9 @@ namespace AkkaMvvm.App
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            // let's just display a message and carry on regardless... yee haa! :D
-
-            var window = _mainWindow;
-
-            if (window == null || window.Visibility == Visibility.Hidden)
-            {
-                MessageBox.Show(e.Exception.StackTrace, e.Exception.Message);
-                MessageBox.Show("Exception occurred before window available. Exiting application");
-                Current.Shutdown();
-            }
-            else
-            {
-                MessageBox.Show(e.Exception.StackTrace, e.Exception.Message);
-            }
-
-
+            MessageBox.Show(e.Exception.StackTrace, e.Exception.Message);
+            MessageBox.Show("Exiting application");
+            Current.Shutdown();
             e.Handled = true;
         }
 
