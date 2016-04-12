@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AkkaMvvm.Views"
         xmlns:vm="clr-namespace:AkkaMvvm.ViewModels"
+        xmlns:actors="clr-namespace:AkkaMvvm.Actors"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="700">
     <Window.Resources>
@@ -13,7 +14,7 @@
                 <TextBlock Background="AliceBlue" FontFamily="Conolas" Text="{Binding Text}" />
             </ScrollViewer>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type vm:TickerViewModel}">
+        <DataTemplate DataType="{x:Type actors:TickerViewModelActor}">
             <StackPanel Background="YellowGreen" Grid.Row="1" Margin="5">
                 <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
                     <Button Content="Start" Command="{Binding StartCommand}" MinWidth="50"/>

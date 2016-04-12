@@ -1,6 +1,4 @@
 ﻿using AkkaMvvm.Interfaces;
-using Akka.Event;
-using System;
 
 namespace AkkaMvvm.ViewModels
 {

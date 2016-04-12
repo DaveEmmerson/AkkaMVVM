@@ -49,6 +49,7 @@ namespace AkkaMvvm.App
                 MessageBox.Show(e.Exception.StackTrace, e.Exception.Message);
             }
 
+
             e.Handled = true;
         }
 
@@ -56,23 +57,11 @@ namespace AkkaMvvm.App
         {
             var system = ActorSystem.Create("Ticker");
 
-            var logViewModel = new LogViewModel();
-            var logActor = system.ActorOf(Props.Create(() => new LogActor(logViewModel)));
-
-            var childProps = Props.Create(factory: () => new TickerActor(logActor));
-
-            var tickerActor = system.ActorOf(
-                Props.Create(() =>
-                    new BackoffSupervisor(childProps, "Ticker", TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(5), 0.1)
-                )
+            var mainWindowActor = system.ActorOf(
+                Props.Create(
+                    () => new MainWindowActor()
+                ).WithDispatcher("akka.actor.synchronized-dispatcher")
             );
-
-            var tickerViewModel = new TickerViewModel(tickerActor);
-
-            var mainWindowViewModel = new MainWindowViewModel(tickerViewModel, logViewModel);
-            _mainWindow = new MainWindow();
-            _mainWindow.DataContext = mainWindowViewModel;
-            _mainWindow.Show();
         }
     }
 }

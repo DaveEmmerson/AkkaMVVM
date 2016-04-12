@@ -33,6 +33,12 @@ namespace AkkaMvvm.Actors
             _timerCancellation = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(interval, interval, _tickLogger, new TickMessage(), Self);
         }
 
+        private void updateSpeed(ChangeSpeedMessage message)
+        {
+            var cappedSpeed = message.Speed > Max ? Max : message.Speed;
+            _interval = (int)(Min + (Max - message.Speed) * Multiplier);
+        }
+
         public void Stopped()
         {
             Receive<StartMessage>(message =>
@@ -42,6 +48,11 @@ namespace AkkaMvvm.Actors
                 startTicker(_interval);
                 _listener = Context.Sender;
                 _listener.Tell(new IsRunningMessage());
+            });
+            Receive<ChangeSpeedMessage>(message =>
+            {
+                _log.Tell(new Debug(nameof(Stopped), typeof(TickerActor), $"Change speed to {message.Speed}"));
+                updateSpeed(message);
             });
         }
 
@@ -57,8 +68,7 @@ namespace AkkaMvvm.Actors
             Receive<ChangeSpeedMessage>(message =>
             {
                 _log.Tell(new Debug(nameof(Running), typeof(TickerActor), $"Change speed to {message.Speed}"));
-                var cappedSpeed = message.Speed > Max ? Max : message.Speed;
-                var _interval = Min + (Max - message.Speed) * Multiplier;
+                updateSpeed(message);
                 startTicker(_interval);
             });
             Receive<TickMessage>(message => _log.Tell(message));
@@ -73,7 +83,7 @@ namespace AkkaMvvm.Actors
         public override void AroundPostStop()
         {
             _log.Tell(new Debug(nameof(AroundPostStop), typeof(TickerActor), "In AroundPostStop"));
-            _timerCancellation.Cancel();
+            _timerCancellation.CancelIfNotNull();
             _listener.Tell(new IsStoppedMessage());
             base.AroundPostStop();
         }
@@ -81,6 +91,7 @@ namespace AkkaMvvm.Actors
         public override void AroundPreRestart(Exception cause, object message)
         {
             _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), "In AroundPreRestart"));
+            _listener.Tell(new IsStoppedMessage());
             base.AroundPreRestart(cause, message);
         }
 

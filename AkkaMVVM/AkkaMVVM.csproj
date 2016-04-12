@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actors\MainWindowActor.cs" />
+    <Compile Include="Actors\TickerViewModelActor.cs" />
+    <Compile Include="Actors\TickerViewModelCreated.cs" />
     <Compile Include="Messages\IsStoppedMessage.cs" />
     <Compile Include="Actors\TickerActor.cs" />
     <Compile Include="Actors\LogActor.cs" />
@@ -76,8 +79,8 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Messages\StartMessage.cs" />
     <Compile Include="Messages\StopMessage.cs" />
-    <Compile Include="ViewModels\TickerViewModel.cs" />
     <Compile Include="Messages\TickMessage.cs" />
+    <Compile Include="ViewModels\ActorViewModelBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="App\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
