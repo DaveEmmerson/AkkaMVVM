@@ -17,14 +17,14 @@ namespace AkkaMvvm.Actors
         private ICancelable _timerCancellation;
         private int _interval = 1000;
 
-        private static int actors = 1;
-        private int number = actors++;
-
+        private static int _actors = 1;
+        private string _actorName;
+            
         public TickerActor(IActorRef log)
         {
-
+            _actorName = $"Actor {_actors++}";
             _log = log;
-            _log.Tell(new Info("ctor", typeof(TickerActor), $"Creating new TickerActor {number}"));
+            _log.Tell(new Info("ctor", typeof(TickerActor), $"ctor {_actorName}"));
             _tickLogger = Context.ActorOf(Props.Create<TickLoggerActor>(_log));
             Stopped();
         }
@@ -47,7 +47,7 @@ namespace AkkaMvvm.Actors
         {
             Receive<StartMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StartMessage (Actor {number})"));
+                _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StartMessage {_actorName}"));
                 Become(Running);
                 startTicker(_interval);
                 _listener = Context.Sender;
@@ -55,7 +55,7 @@ namespace AkkaMvvm.Actors
             });
             Receive<ChangeSpeedMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Stopped), typeof(TickerActor), $"Change speed to {message.Speed}"));
+                _log.Tell(new Debug(nameof(Stopped), typeof(TickerActor), $"Change speed to {message.Speed} ({_actorName})"));
                 updateSpeed(message);
             });
         }
@@ -64,14 +64,14 @@ namespace AkkaMvvm.Actors
         {
             Receive<StopMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), "StopMessage (Actor {number})"));
+                _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StopMessage {_actorName}"));
                 Become(Stopped);
                 _timerCancellation.Cancel();
                 _listener.Tell(new IsStoppedMessage());
             });
             Receive<ChangeSpeedMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Running), typeof(TickerActor), $"Change speed to {message.Speed}"));
+                _log.Tell(new Debug(nameof(Running), typeof(TickerActor), $"Change speed to {message.Speed} ({_actorName})"));
                 updateSpeed(message);
                 startTicker(_interval);
             });
@@ -80,20 +80,20 @@ namespace AkkaMvvm.Actors
 
         public override void AroundPreStart()
         {
-            _log.Tell(new Debug(nameof(AroundPreStart), typeof(TickerActor), $"In AroundPreStart (Actor {number})"));
+            _log.Tell(new Debug(nameof(AroundPreStart), typeof(TickerActor), _actorName));
             base.AroundPreStart();
         }
 
         public override void AroundPostStop()
         {
-            _log.Tell(new Debug(nameof(AroundPostStop), typeof(TickerActor), $"In AroundPostStop (Actor {number})"));
+            _log.Tell(new Debug(nameof(AroundPostStop), typeof(TickerActor), _actorName));
             _timerCancellation.CancelIfNotNull();
             base.AroundPostStop();
         }
 
         public override void AroundPreRestart(Exception cause, object message)
         {
-            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), $"In AroundPreRestart (Actor {number})"));
+            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), _actorName));
             _listener.Tell(new StopMessage());
             _listener.Tell(new IsStoppedMessage());
             base.AroundPreRestart(cause, message);
@@ -101,7 +101,7 @@ namespace AkkaMvvm.Actors
 
         public override void AroundPostRestart(Exception cause, object message)
         {
-            _log.Tell(new Debug(nameof(AroundPostRestart), typeof(TickerActor), $"In AroundPostRestart (Actor {number})"));
+            _log.Tell(new Debug(nameof(AroundPostRestart), typeof(TickerActor), _actorName));
             _listener.Tell(new IsStoppedMessage());
             base.AroundPostRestart(cause, message);
         }
