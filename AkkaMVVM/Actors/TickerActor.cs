@@ -93,7 +93,7 @@ namespace AkkaMvvm.Actors
 
         public override void AroundPreRestart(Exception cause, object message)
         {
-            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), _actorName));
+            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), $"Exception: {cause.Message}, Message: {message}, {_actorName}"));
             _listener.Tell(new StopMessage());
             _listener.Tell(new IsStoppedMessage());
             base.AroundPreRestart(cause, message);
@@ -101,8 +101,7 @@ namespace AkkaMvvm.Actors
 
         public override void AroundPostRestart(Exception cause, object message)
         {
-            _log.Tell(new Debug(nameof(AroundPostRestart), typeof(TickerActor), _actorName));
-            _listener.Tell(new IsStoppedMessage());
+            _log.Tell(new Debug(nameof(AroundPostRestart), typeof(TickerActor), $"Exception: {cause.Message}, Message: {message}, {_actorName}"));
             base.AroundPostRestart(cause, message);
         }
     }
