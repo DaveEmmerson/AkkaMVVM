@@ -54,7 +54,6 @@ namespace AkkaMvvm.Actors
                 _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StartMessage {_actorName}"));
                 Become(Running);
                 startTicker(_interval);
-                _listener.Tell(new IsRunningMessage());
             });
             Receive<ChangeSpeedMessage>(message =>
             {
@@ -65,6 +64,7 @@ namespace AkkaMvvm.Actors
 
         public void Running()
         {
+            _listener.Tell(new IsRunningMessage());
             Receive<StopMessage>(message =>
             {
                 _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StopMessage {_actorName}"));
