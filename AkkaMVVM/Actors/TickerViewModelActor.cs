@@ -31,6 +31,7 @@ namespace AkkaMvvm.Actors
             get { return _running; }
             set
             {
+                _log.Tell(new Debug(nameof(Running), typeof(TickerViewModelActor), $"Running was {_running}, now {value}"));
                 Set(ref _running, value, () =>
                 {
                     StartCommand.RaiseCanExecuteChanged();
