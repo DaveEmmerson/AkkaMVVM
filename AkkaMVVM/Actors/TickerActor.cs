@@ -24,20 +24,15 @@ namespace AkkaMvvm.Actors
         {
             _actorName = $"Actor {_actors++}";
             _log = log;
-            _log.Tell(new Debug("ctor", typeof(TickerActor), $"{_actorName}"));
             _tickLogger = Context.ActorOf(Props.Create<TickLoggerActor>(_log));
-            _log.Tell(new Debug("ctor", typeof(TickerActor), $"Becoming Stopped ({_actorName})"));
             Stopped();
         }
 
         private void startTicker(double intervalInMilliseconds)
         {
-            _log.Tell(new Debug(nameof(startTicker), typeof(TickerActor), $"Speed is {intervalInMilliseconds} ({_actorName})"));
             _timerCancellation.CancelIfNotNull();
             var interval = TimeSpan.FromMilliseconds(intervalInMilliseconds);
-            _log.Tell(new Debug(nameof(startTicker), typeof(TickerActor), $"Starting schedule ({_actorName})"));
             _timerCancellation = Context.System.Scheduler.ScheduleTellRepeatedlyCancelable(interval, interval, _tickLogger, new TickMessage(), Self);
-            _log.Tell(new Debug(nameof(startTicker), typeof(TickerActor), $"Schedule started ({_actorName})"));
         }
 
         private void updateSpeed(ChangeSpeedMessage message)
@@ -51,13 +46,11 @@ namespace AkkaMvvm.Actors
             Receive<StartMessage>(message =>
             {
                 _listener = Sender;
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StartMessage {_actorName}"));
                 Become(Running);
                 startTicker(_interval);
             });
             Receive<ChangeSpeedMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Stopped), typeof(TickerActor), $"Change speed to {message.Speed} ({_actorName})"));
                 updateSpeed(message);
             });
         }
@@ -67,24 +60,16 @@ namespace AkkaMvvm.Actors
             _listener.Tell(new IsRunningMessage());
             Receive<StopMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerActor), $"StopMessage {_actorName}"));
                 Become(Stopped);
                 _timerCancellation.Cancel();
                 _listener.Tell(new IsStoppedMessage());
             });
             Receive<ChangeSpeedMessage>(message =>
             {
-                _log.Tell(new Debug(nameof(Running), typeof(TickerActor), $"Change speed to {message.Speed} ({_actorName})"));
                 updateSpeed(message);
                 startTicker(_interval);
             });
             Receive<TickMessage>(message => _log.Tell(message));
-        }
-
-        public override void AroundPreStart()
-        {
-            _log.Tell(new Debug(nameof(AroundPreStart), typeof(TickerActor), _actorName));
-            base.AroundPreStart();
         }
 
         public override void AroundPostStop()
@@ -96,11 +81,8 @@ namespace AkkaMvvm.Actors
 
         public override void AroundPreRestart(Exception cause, object message)
         {
-            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), $"Exception: {cause.Message}, Message: {message}, {_actorName}"));
             _listener.Tell(new StopMessage());
-            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), $"StopMessage sent ({_actorName})"));
             _listener.Tell(new IsStoppedMessage());
-            _log.Tell(new Debug(nameof(AroundPreRestart), typeof(TickerActor), $"IsStoppedMessage sent ({_actorName})"));
             base.AroundPreRestart(cause, message);
         }
 

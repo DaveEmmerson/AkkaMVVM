@@ -45,7 +45,6 @@ namespace AkkaMvvm.Actors
 
         public TickerViewModelActor(IActorRef tickerActor, IActorRef parent, IActorRef log)
         {
-            log.Tell(new Debug(nameof(TickerViewModelActor), typeof(TickerViewModelActor), "Creating TickerViewModelActor"));
 
             _tickerActor = tickerActor;
             _log = log;
@@ -68,40 +67,32 @@ namespace AkkaMvvm.Actors
 
         public void Starting()
         {
-            _log.Tell(new Debug(nameof(Starting), typeof(TickerViewModelActor), "Became"));
             Receive<IsRunningMessage>(_ =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerViewModelActor), "IsRunningMessage"));
                 Running = true;
                 Become(Started);
             });
         }
 
         public void Started() {
-            _log.Tell(new Debug(nameof(Started), typeof(TickerViewModelActor), "Became"));
             Receive<StopMessage>(_ =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerViewModelActor), "StopMessage"));
                 Become(Stopping);
                 _tickerActor.Tell(new StopMessage());
             });
         }
 
         public void Stopping() {
-            _log.Tell(new Debug(nameof(Stopping), typeof(TickerViewModelActor), "Became"));
             Receive<IsStoppedMessage>(_ =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerViewModelActor), "IsStoppedMessage"));
                 Running = false;
                 Become(Stopped);
             });
         }
-
+                                                                                                                                                                                                                                                                                                                         
         public void Stopped() {
-            _log.Tell(new Debug(nameof(Stopped), typeof(TickerViewModelActor), "Became"));
             Receive<StartMessage>(_ =>
             {
-                _log.Tell(new Debug(nameof(Receive), typeof(TickerViewModelActor), "StartMessage"));
                 Become(Starting);
                 _tickerActor.Tell(new StartMessage());
             });
