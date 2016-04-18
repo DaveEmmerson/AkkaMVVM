@@ -1,6 +1,7 @@
 ﻿using Akka.Actor;
 using Akka.Event;
 using AkkaMvvm.Interfaces;
+using AkkaMvvm.Messages;
 using System;
 
 namespace AkkaMvvm.Actors
@@ -22,6 +23,10 @@ namespace AkkaMvvm.Actors
                     $"{threadType} ({thread.ManagedThreadId:000}): {e.LogSource}: {e.Message}" +
                     Environment.NewLine + viewModel.Text;
             });
+
+            var logRouter = Context.ActorSelection("/system/*-LogRouter");
+
+            logRouter.Tell(new RegisterLoggerMessage());
         }
     }
 }

@@ -6,11 +6,12 @@ namespace AkkaMvvm.Actors
 {
     public class TickLoggerActor : ReceiveActor
     {
-        public TickLoggerActor(IActorRef _log)
+        public TickLoggerActor()
         {
+            var log = Context.GetLogger();
             Receive<TickMessage>(_ =>
             {
-                _log.Tell(new Info(nameof(TickLoggerActor), typeof(TickLoggerActor), "Tick"));
+                log.Info("Tick");
             });
         }
     }

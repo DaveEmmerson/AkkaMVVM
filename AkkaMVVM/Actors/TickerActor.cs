@@ -11,7 +11,7 @@ namespace AkkaMvvm.Actors
         private readonly double Min = 100.0;
         private readonly double Multiplier = 500.0;
 
-        private IActorRef _log;
+        private ILoggingAdapter _log;
         private IActorRef _tickLogger;
         private IActorRef _listener;
         private ICancelable _timerCancellation;
@@ -20,11 +20,11 @@ namespace AkkaMvvm.Actors
         private static int _actors = 1;
         private string _actorName;
             
-        public TickerActor(IActorRef log)
+        public TickerActor()
         {
             _actorName = $"Actor {_actors++}";
-            _log = log;
-            _tickLogger = Context.ActorOf(Props.Create<TickLoggerActor>(_log));
+            _log = Context.GetLogger();
+            _tickLogger = Context.ActorOf<TickLoggerActor>();
             Stopped();
         }
 
@@ -69,12 +69,11 @@ namespace AkkaMvvm.Actors
                 updateSpeed(message);
                 startTicker(_interval);
             });
-            Receive<TickMessage>(message => _log.Tell(message));
         }
 
         public override void AroundPostStop()
         {
-            _log.Tell(new Debug(nameof(AroundPostStop), typeof(TickerActor), _actorName));
+            _log.Debug(_actorName);
             _timerCancellation.CancelIfNotNull();
             base.AroundPostStop();
         }
@@ -88,7 +87,7 @@ namespace AkkaMvvm.Actors
 
         public override void AroundPostRestart(Exception cause, object message)
         {
-            _log.Tell(new Debug(nameof(AroundPostRestart), typeof(TickerActor), $"Exception: {cause.Message}, Message: {message}, {_actorName}"));
+            _log.Debug($"Exception: {cause.Message}, Message: {message}, {_actorName}");
             base.AroundPostRestart(cause, message);
         }
     }

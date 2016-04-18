@@ -13,10 +13,11 @@ namespace AkkaMvvm.Actors
         public MainWindowActor()
         {
             var logViewModel = new LogViewModel();
+            var deadMessagesViewModel = new DeadMessagesViewModel();
             var logActor = Context.ActorOf(Props.Create(() => new LogActor(logViewModel)));
             logActor.Tell(new Debug(nameof(MainWindowActor), typeof(MainWindowActor), "Logger started"));
 
-            var childProps = Props.Create(factory: () => new TickerActor(logActor));
+            var childProps = Props.Create<TickerActor>();
 
             var tickerActor = Context.ActorOf(
                 Props.Create(() =>
@@ -32,14 +33,13 @@ namespace AkkaMvvm.Actors
 
             Receive<TickerViewModelCreated>(message =>
             {
-                var mainWindowViewModel = new MainWindowViewModel(message.TickerViewModel, logViewModel);
+                var mainWindowViewModel = new MainWindowViewModel(message.TickerViewModel, logViewModel, deadMessagesViewModel);
                 var mainWindow = new MainWindow();
 
-                logActor.Tell(new Debug(nameof(Receive), typeof(MainWindowActor), "Main window created"));
                 mainWindow.DataContext = mainWindowViewModel;
 
                 mainWindow.Show();
-                logActor.Tell(new Debug(nameof(Receive), typeof(MainWindowActor), "Main window shown"));
+                Context.GetLogger().Debug("Main window shown");
             });
         }
     }

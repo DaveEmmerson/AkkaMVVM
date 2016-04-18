@@ -6,11 +6,13 @@ namespace AkkaMvvm.ViewModels
     {
         public ITickerViewModel TickerViewModel { get; }
         public ILogViewModel LogViewModel { get; }
+        public IDeadMessagesViewModel DeadMessagesViewModel { get; }
 
-        public MainWindowViewModel(ITickerViewModel tickerViewModel, ILogViewModel logViewModel)
+        public MainWindowViewModel(ITickerViewModel tickerViewModel, ILogViewModel logViewModel, IDeadMessagesViewModel deadMessagesViewModel)
         {
             TickerViewModel = tickerViewModel;
             LogViewModel = logViewModel;
+            DeadMessagesViewModel = deadMessagesViewModel;
         }
     }
 }

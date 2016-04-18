@@ -61,7 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actors\LogRouter.cs" />
     <Compile Include="Actors\MainWindowActor.cs" />
+    <Compile Include="Messages\RegisterLoggerMessage.cs" />
     <Compile Include="Actors\TickerViewModelActor.cs" />
     <Compile Include="Actors\TickerViewModelCreated.cs" />
     <Compile Include="Messages\IsStoppedMessage.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="Messages\ChangeSpeedMessage.cs" />
     <Compile Include="ViewModels\Command.cs" />
     <Compile Include="Messages\IsRunningMessage.cs" />
+    <Compile Include="ViewModels\DeadMessagesViewModel.cs" />
+    <Compile Include="Interfaces\IDeadMessagesViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Messages\StartMessage.cs" />
@@ -116,10 +120,24 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App\App.config" />
+    <None Include="App\App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Log.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeadMessages.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Ticker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

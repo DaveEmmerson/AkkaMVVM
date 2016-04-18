@@ -3,46 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AkkaMvvm.Views"
-        xmlns:vm="clr-namespace:AkkaMvvm.ViewModels"
-        xmlns:actors="clr-namespace:AkkaMvvm.Actors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="700">
+        Title="MainWindow" Height="400" Width="1200">
     <Window.Resources>
-        <DataTemplate DataType="{x:Type vm:LogViewModel}">
-            <ScrollViewer VerticalScrollBarVisibility="Visible">
-                <TextBlock Background="AliceBlue" FontFamily="Conolas" Text="{Binding Text}" />
-            </ScrollViewer>
-        </DataTemplate>
-        <DataTemplate DataType="{x:Type actors:TickerViewModelActor}">
-            <StackPanel Grid.Row="1" Margin="5">
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Background" Value="LightGoldenrodYellow" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Running}" Value="True">
-                                <Setter Property="Background" Value="YellowGreen" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-                <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
-                    <Button Content="Start" Command="{Binding StartCommand}" MinWidth="50"/>
-                    <Button Content="Stop" Command="{Binding StopCommand}" Margin="10 0 15 0" MinWidth="50" />
-                    <Label>Speed</Label>
-                    <Slider TickFrequency="1" Margin="5" Width="200" Minimum="0" Maximum="11" x:Name="SpeedSlider" Value="{Binding Speed, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBox MinWidth="30" Text="{Binding ElementName=SpeedSlider, Path=Value, StringFormat=0.0, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
-                </StackPanel>
-            </StackPanel>
-        </DataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Ticker.xaml" />
+                <ResourceDictionary Source="Log.xaml" />
+                <ResourceDictionary Source="DeadMessages.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
         <ContentControl Grid.Row="0" Content="{Binding LogViewModel}" />
-        <ContentControl Grid.Row="1" Content="{Binding TickerViewModel}" />
+        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding DeadMessagesViewModel}" />
+        <ContentControl Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding TickerViewModel}" />
     </Grid>
 </Window>
 

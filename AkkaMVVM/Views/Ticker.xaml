@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:actors="clr-namespace:AkkaMvvm.Actors">
+
+    <DataTemplate DataType="{x:Type actors:TickerViewModelActor}">
+        <StackPanel Margin="5">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Background" Value="LightGoldenrodYellow" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Running}" Value="True">
+                            <Setter Property="Background" Value="YellowGreen" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
+                <Button Content="Start" Command="{Binding StartCommand}" MinWidth="50"/>
+                <Button Content="Stop" Command="{Binding StopCommand}" Margin="10 0 15 0" MinWidth="50" />
+                <Label>Speed</Label>
+                <Slider TickFrequency="1" Margin="5" Width="200" Minimum="0" Maximum="11" x:Name="SpeedSlider" Value="{Binding Speed, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox MinWidth="30" Text="{Binding ElementName=SpeedSlider, Path=Value, StringFormat=0.0, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+
+</ResourceDictionary>
