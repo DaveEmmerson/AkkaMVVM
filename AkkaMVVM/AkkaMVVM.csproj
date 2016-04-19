@@ -61,8 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Actors\DeadLetterViewModelActor.cs" />
     <Compile Include="Actors\LogRouter.cs" />
     <Compile Include="Actors\MainWindowActor.cs" />
+    <Compile Include="Messages\DeadLetterViewModelCreatedMessage.cs" />
     <Compile Include="Messages\RegisterLoggerMessage.cs" />
     <Compile Include="Actors\TickerViewModelActor.cs" />
     <Compile Include="Actors\TickerViewModelCreated.cs" />
@@ -77,8 +79,7 @@
     <Compile Include="Messages\ChangeSpeedMessage.cs" />
     <Compile Include="ViewModels\Command.cs" />
     <Compile Include="Messages\IsRunningMessage.cs" />
-    <Compile Include="ViewModels\DeadMessagesViewModel.cs" />
-    <Compile Include="Interfaces\IDeadMessagesViewModel.cs" />
+    <Compile Include="Interfaces\IDeadLetterViewModel.cs" />
     <Compile Include="ViewModels\LogViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Messages\StartMessage.cs" />

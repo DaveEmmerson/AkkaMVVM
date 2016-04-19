@@ -1,10 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vm="clr-namespace:AkkaMvvm.ViewModels">
+                    xmlns:actors="clr-namespace:AkkaMvvm.Actors">
 
-    <DataTemplate DataType="{x:Type vm:DeadMessagesViewModel}">
+    <DataTemplate DataType="{x:Type actors:DeadLetterViewModelActor}">
         <ScrollViewer VerticalScrollBarVisibility="Visible">
-            <TextBlock Background="AliceBlue" FontFamily="Conolas" Text="{Binding DeadMessages}" />
+            <TextBlock Background="AliceBlue" FontFamily="Conolas" Text="{Binding DeadLetters}" />
         </ScrollViewer>
     </DataTemplate>
 
