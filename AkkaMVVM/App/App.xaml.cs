@@ -1,12 +1,5 @@
 ﻿using Akka.Actor;
-using Akka.Event;
-using Akka.Pattern;
 using AkkaMvvm.Actors;
-using AkkaMvvm.Interfaces;
-using AkkaMvvm.ViewModels;
-using AkkaMvvm.Views;
-using System;
-using System.Timers;
 using System.Windows;
 
 namespace AkkaMvvm.App

@@ -27,8 +27,7 @@ namespace AkkaMvvm.Actors
 
             Context.System.EventStream.Subscribe<DeadLetter>(deadLetterViewModelActor);
 
-            var logActor = Context.ActorOf(Props.Create(() => new LogActor(_logViewModel)));
-            logActor.Tell(new Debug(nameof(MainWindowActor), typeof(MainWindowActor), "Logger started"));
+            var logActor = Context.ActorOf(Props.Create(typeof(LogActor), _logViewModel));         
 
             var childProps = Props.Create<TickerActor>();
 
@@ -40,7 +39,7 @@ namespace AkkaMvvm.Actors
 
             Context.ActorOf(
                 Props.Create(
-                    () => new TickerViewModelActor(tickerActor, Self, logActor)
+                    () => new TickerViewModelActor(tickerActor, Self)
                 )
             );
 

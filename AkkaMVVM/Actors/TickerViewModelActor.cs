@@ -3,7 +3,6 @@ using System.Windows.Input;
 using Akka.Actor;
 using AkkaMvvm.Messages;
 using AkkaMvvm.ViewModels;
-using Akka.Event;
 
 namespace AkkaMvvm.Actors
 {
@@ -31,7 +30,6 @@ namespace AkkaMvvm.Actors
             get { return _running; }
             set
             {
-                _log.Tell(new Debug(nameof(Running), typeof(TickerViewModelActor), $"Running was {_running}, now {value}"));
                 Set(ref _running, value, () =>
                 {
                     StartCommand.RaiseCanExecuteChanged();
@@ -41,13 +39,11 @@ namespace AkkaMvvm.Actors
         }
 
         private IActorRef _tickerActor;
-        private IActorRef _log;
 
-        public TickerViewModelActor(IActorRef tickerActor, IActorRef parent, IActorRef log)
+        public TickerViewModelActor(IActorRef tickerActor, IActorRef parent)
         {
 
             _tickerActor = tickerActor;
-            _log = log;
             _tickerActor.Tell(new ChangeSpeedMessage(Speed));
             Become(Stopped);
             var self = Self;
