@@ -84,11 +84,5 @@ namespace AkkaMvvm.Actors
             _listener.Tell(new IsStoppedMessage());
             base.AroundPreRestart(cause, message);
         }
-
-        public override void AroundPostRestart(Exception cause, object message)
-        {
-            _log.Debug($"Exception: {cause.Message}, Message: {message}, {_actorName}");
-            base.AroundPostRestart(cause, message);
-        }
     }
 }
