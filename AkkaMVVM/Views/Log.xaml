@@ -3,7 +3,7 @@
                     xmlns:vm="clr-namespace:AkkaMvvm.ViewModels">
 
   <DataTemplate DataType="{x:Type vm:LogViewModel}">
-    <ScrollViewer VerticalScrollBarVisibility="Visible">
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
       <TextBlock Background="AliceBlue" FontFamily="Conolas" Text="{Binding Text}" />
     </ScrollViewer>
   </DataTemplate>
