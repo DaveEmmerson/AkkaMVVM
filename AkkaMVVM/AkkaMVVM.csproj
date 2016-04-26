@@ -67,7 +67,7 @@
     <Compile Include="Messages\DeadLetterViewModelCreatedMessage.cs" />
     <Compile Include="Messages\RegisterLoggerMessage.cs" />
     <Compile Include="Actors\TickerViewModelActor.cs" />
-    <Compile Include="Actors\TickerViewModelCreated.cs" />
+    <Compile Include="Messages\TickerViewModelCreated.cs" />
     <Compile Include="Messages\IsStoppedMessage.cs" />
     <Compile Include="Actors\TickerActor.cs" />
     <Compile Include="Actors\LogActor.cs" />

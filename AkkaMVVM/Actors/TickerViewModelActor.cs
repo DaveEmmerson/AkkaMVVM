@@ -90,7 +90,6 @@ namespace AkkaMvvm.Actors
             Receive<StartMessage>(_ =>
             {
                 Become(Starting);
-                Context.ActorSelection("blah").Tell("this should go to dead letters");
                 _tickerActor.Tell(new StartMessage());
             });
         }

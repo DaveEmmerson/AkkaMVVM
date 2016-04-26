@@ -1,6 +1,6 @@
 ﻿using AkkaMvvm.Interfaces;
 
-namespace AkkaMvvm.Actors
+namespace AkkaMvvm.Messages
 {
     public class TickerViewModelCreated
     {
