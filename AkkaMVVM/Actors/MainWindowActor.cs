@@ -26,8 +26,8 @@ namespace AkkaMvvm.Actors
             );
 
             Context.System.EventStream.Subscribe<DeadLetter>(deadLetterViewModelActor);
-
-            var logActor = Context.ActorOf(Props.Create(typeof(LogActor), _logViewModel));         
+            
+            var logActor = Context.ActorOf(Props.Create(typeof(LogActor), _logViewModel));      
 
             var childProps = Props.Create<TickerActor>();
 
