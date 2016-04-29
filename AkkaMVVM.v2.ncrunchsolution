@@ -10,5 +10,8 @@
   <FrameworkUtilisationTypeForXUnit2>UseDynamicAnalysis</FrameworkUtilisationTypeForXUnit2>
   <NCrunchCacheStoragePath />
   <MetricsExclusionList>
+AkkaMVVM\AkkaMvvm.csproj\Properties
+Properties\Resources.Designer.cs:AkkaMVVM\AkkaMvvm.csproj
+Properties\Settings.Designer.cs:AkkaMVVM\AkkaMvvm.csproj
 </MetricsExclusionList>
 </SolutionConfiguration>

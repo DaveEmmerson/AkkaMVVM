@@ -1,4 +1,5 @@
 ﻿using AkkaMvvm.Interfaces;
+using AkkaMvvm.Utilities;
 
 namespace AkkaMvvm.ViewModels
 {
@@ -8,7 +9,10 @@ namespace AkkaMvvm.ViewModels
         public string Text
         {
             get { return _text; }
-            set { Set(ref _text, value); }
+            set {
+                Guard.NotNull(value);
+                Set(ref _text, value);
+            }
         }
     }
 }
