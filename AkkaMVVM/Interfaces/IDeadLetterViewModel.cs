@@ -1,6 +1,6 @@
 ﻿namespace AkkaMvvm.Interfaces
 {
-    public interface IDeadLetterViewModel
+    public interface IDeadLettersViewModel
     {
         string DeadLetters { get; }
     }

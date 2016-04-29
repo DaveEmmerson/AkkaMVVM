@@ -10,7 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Ticker.xaml" />
                 <ResourceDictionary Source="Log.xaml" />
-                <ResourceDictionary Source="DeadMessages.xaml" />
+                <ResourceDictionary Source="DeadLetters.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>

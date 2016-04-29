@@ -7,7 +7,7 @@ using Akka.Event;
 
 namespace AkkaMvvm.Actors
 {
-    public class DeadLetterViewModelActor : ActorViewModelBase, IDeadLetterViewModel
+    public class DeadLettersViewModelActor : ActorViewModelBase, IDeadLettersViewModel
     {
         private string _deadLetters;
 
@@ -16,10 +16,10 @@ namespace AkkaMvvm.Actors
             get { return _deadLetters; }
             private set { Set(ref _deadLetters, value); }
         }
-        public DeadLetterViewModelActor(IActorRef parent)
+        public DeadLettersViewModelActor(IActorRef parent)
         {
             Receive<DeadLetter>(letter => DeadLetters = letter + Environment.NewLine + DeadLetters);
-            parent.Tell(new DeadLetterViewModelCreated(this));
+            parent.Tell(new DeadLettersViewModelCreated(this));
         }
     }
 }

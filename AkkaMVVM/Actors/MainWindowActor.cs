@@ -11,7 +11,7 @@ namespace AkkaMvvm.Actors
 {
     public class MainWindowActor : ReceiveActor
     {
-        private IDeadLetterViewModel _deadLetterViewModel;
+        private IDeadLettersViewModel _deadLettersViewModel;
         private ITickerViewModel _tickerViewModel;
         private ILogViewModel _logViewModel;
 
@@ -19,13 +19,13 @@ namespace AkkaMvvm.Actors
         {
             _logViewModel = new LogViewModel();
             
-            var deadLetterViewModelActor = Context.ActorOf(
+            var deadLettersViewModelActor = Context.ActorOf(
                 Props.Create(
-                    () => new DeadLetterViewModelActor(Self)
+                    () => new DeadLettersViewModelActor(Self)
                 )
             );
 
-            Context.System.EventStream.Subscribe<DeadLetter>(deadLetterViewModelActor);
+            Context.System.EventStream.Subscribe<DeadLetter>(deadLettersViewModelActor);
             
             var logActor = Context.ActorOf(Props.Create(typeof(LogActor), _logViewModel));      
 
@@ -46,13 +46,13 @@ namespace AkkaMvvm.Actors
             Receive<TickerViewModelCreated>(message =>
             {
                 _tickerViewModel = message.TickerViewModel;
-                if (_deadLetterViewModel != null)
+                if (_deadLettersViewModel != null)
                     CreateMainWindow();
             });
 
-            Receive<DeadLetterViewModelCreated>(message =>
+            Receive<DeadLettersViewModelCreated>(message =>
             {
-                _deadLetterViewModel = message.DeadLetterViewModel;
+                _deadLettersViewModel = message.DeadLettersViewModel;
                 if (_tickerViewModel != null)
                     CreateMainWindow();
             });
@@ -60,7 +60,7 @@ namespace AkkaMvvm.Actors
 
         public void CreateMainWindow()
         {
-            var mainWindowViewModel = new MainWindowViewModel(_tickerViewModel, _logViewModel, _deadLetterViewModel);
+            var mainWindowViewModel = new MainWindowViewModel(_tickerViewModel, _logViewModel, _deadLettersViewModel);
             var mainWindow = new MainWindow();
 
             mainWindow.DataContext = mainWindowViewModel;

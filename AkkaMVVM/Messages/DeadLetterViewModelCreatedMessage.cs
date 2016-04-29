@@ -2,13 +2,13 @@
 
 namespace AkkaMvvm.Messages
 {
-    public class DeadLetterViewModelCreated
+    public class DeadLettersViewModelCreated
     {
-        public IDeadLetterViewModel DeadLetterViewModel { get; }
+        public IDeadLettersViewModel DeadLettersViewModel { get; }
 
-        public DeadLetterViewModelCreated(IDeadLetterViewModel deadLetterViewModel)
+        public DeadLettersViewModelCreated(IDeadLettersViewModel deadLettersViewModel)
         {
-            DeadLetterViewModel = deadLetterViewModel;
+            DeadLettersViewModel = deadLettersViewModel;
         }
     }
 }
