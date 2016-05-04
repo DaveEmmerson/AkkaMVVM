@@ -13,5 +13,6 @@
 AkkaMVVM\AkkaMvvm.csproj\Properties
 Properties\Resources.Designer.cs:AkkaMVVM\AkkaMvvm.csproj
 Properties\Settings.Designer.cs:AkkaMVVM\AkkaMvvm.csproj
+Views\MainWindow.xaml.cs:AkkaMVVM\AkkaMvvm.csproj
 </MetricsExclusionList>
 </SolutionConfiguration>

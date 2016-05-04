@@ -6,11 +6,8 @@ namespace AkkaMvvm.App
 {
     public partial class App : Application
     {
-        private const int retryCount = 1;
-        private const int retryInterval = 2;
-
         public App()
-        {
+        {  
             Startup += App_Startup;
             DispatcherUnhandledException += App_DispatcherUnhandledException;
         }

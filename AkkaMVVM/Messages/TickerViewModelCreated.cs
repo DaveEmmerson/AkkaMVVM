@@ -1,4 +1,5 @@
 ﻿using AkkaMvvm.Interfaces;
+using AkkaMvvm.Utilities;
 
 namespace AkkaMvvm.Messages
 {
@@ -8,6 +9,7 @@ namespace AkkaMvvm.Messages
 
         public TickerViewModelCreated(ITickerViewModel tickerViewModel)
         {
+            Guard.NotNull(tickerViewModel);
             TickerViewModel = tickerViewModel;
         }
     }

@@ -50,7 +50,7 @@ namespace AkkaMvvm.Actors
                     CreateMainWindow();
             });
 
-            Receive<DeadLettersViewModelCreated>(message =>
+            Receive<DeadLettersViewModelCreatedMessage>(message =>
             {
                 _deadLettersViewModel = message.DeadLettersViewModel;
                 if (_tickerViewModel != null)

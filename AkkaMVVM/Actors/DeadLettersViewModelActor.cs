@@ -9,7 +9,7 @@ namespace AkkaMvvm.Actors
 {
     public class DeadLettersViewModelActor : ActorViewModelBase, IDeadLettersViewModel
     {
-        private string _deadLetters;
+        private string _deadLetters; 
 
         public string DeadLetters
         {
@@ -19,7 +19,7 @@ namespace AkkaMvvm.Actors
         public DeadLettersViewModelActor(IActorRef parent)
         {
             Receive<DeadLetter>(letter => DeadLetters = letter + Environment.NewLine + DeadLetters);
-            parent.Tell(new DeadLettersViewModelCreated(this));
+            parent.Tell(new DeadLettersViewModelCreatedMessage(this));
         }
     }
 }
